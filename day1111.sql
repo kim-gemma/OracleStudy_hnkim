@@ -244,21 +244,36 @@ select name 학생명, jumin 주민, height 키 from student where height > (sel
 --james와 급여가 동일하거나 더많이 받는 사원명과 급여를 조회하시오
 select ename 사원명, sal 급여 from emp where sal >=(select sal from emp where ename='JAMES');
 
---Q. 
---1.emp에서 표현식을 이용하여 다음처럼 출력하시오(SMITH(clerk))
+--Q.
+--1. emp에서 표현식을 이용하여 다음처럼 출력하시오   SMITH(CLERK)
+select ename||'('||job||')' from emp;
 
 --2.교수테이블에서 이름,급여,보너스,총급여를 구하시오
+select name 이름,pay 급여,NVL(bonus,0) 보너스,pay+NVL(bonus,0) 총급여 from professor;
+
 --3.고객테이블에서 포인트가 30~50만 사이인 사람의 이름과 포인트를 출력하시오
+select gname 이름,point 포인트 from gogak where point between 300000 and 500000;
+
 --4.교수테이블에서 성이 김씨인 사람의 이름,직위,전공과목을 조회하시오
---5.emp에서 comm이 null인 사람의 이름고 급여를 출력하시오
---6.학생테이블에서 4학년 중에서 키가 170보다 작거나 몸무게가 60보다 큰 학생의 이름,학년, 키 몸무게를 조회하시오.
+select name 이름,position 직위,deptno 전공과목 from professor where name like '김%';
+
+--5.emp에서 comm이 null인 사람의 이름과 급여를 출력하시오
+select ename 이름,sal 급여 from emp where comm is null;
+
+--6.학생테이블에서 4학년중에서 키가 170보다 작거나 몸무게가 60보다 큰학생의 이름,학년,키,몸무게를 조회하시오
+select name 이름,grade 학년,height 키,weight 몸무게 from student where grade=4 and (height<170 or weight>60);
+
 --7.emp에서 comm의 null을 0으로 바꾸어서 직업이 MANAGER인 사람만 이름과 보너스 출력하시오
+select ename,NVL(comm,0) from emp where job='MANAGER';
 
 --8.1학년 학생의 이름,키,몸무게 출력하시오 단 몸무게 많은순으로 정렬하세요
+select name,height,weight from student where grade=1 order by weight desc;
 
 --9.교수테이블에서 나한열의 pay와 같은 페이를 받은 교수명과 pay를 조회하시오
+select name,pay from professor where pay=(select pay from professor where name='나한열');
 
 --10.교수테이블에서 조인형의 직급과 같은 직급을 가진 사람의 이름 급여 직급을 조회하시오
+select name,pay,position from professor where position=(select position from professor where name='조인형');
 
 
 
